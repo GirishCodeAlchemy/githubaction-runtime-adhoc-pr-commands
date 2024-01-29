@@ -1,0 +1,14 @@
+name: "PR Runtime Adhoc Commands"
+author: "Girish V"
+description: 'Run the adhoc commands on the runtime using Githubaction on the PR.'
+branding:
+  icon: 'git-pull-request'
+  color: 'gray-dark'
+runs:
+  using: "docker"
+  image: "Dockerfile"
+inputs:
+  autosquash:
+    description: Should the rebase autosquash fixup and squash commits
+    required: false
+    default: 'false'

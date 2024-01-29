@@ -1,2 +1,1 @@
-# alchemy-template
-Template for github repositories
+# GithubAction Runtime Adhoc PR Commands
