@@ -16,6 +16,10 @@ fi
 
 echo "Collecting information about PR #$PR_NUMBER of $GITHUB_REPOSITORY..."
 
+# echo all environment variables
+echo "Environment variables:"
+env | sort
+
 if [[ -z "$GITHUB_TOKEN" ]]; then
 	echo "Set the GITHUB_TOKEN env variable."
 	exit 1
