@@ -28,7 +28,7 @@ fi
 # Fetch the comment body
 COMMENT_BODY=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
     "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" | \
-    jq -r ".[] | select(.id == $GITHUB_EVENT_ID) | .body")
+    jq -r ".[-1].body")
 
 echo "Comment Body: $COMMENT_BODY"
 
