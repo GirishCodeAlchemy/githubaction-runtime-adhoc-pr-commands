@@ -21,4 +21,4 @@ COPY scripts /app/
 RUN chmod +x /app/entrypoint.sh
 
 # ENTRYPOINT ["/app/entrypoint.sh"]
-ENTRYPOINT ["python3","/app/alchemy.py"]
+ENTRYPOINT ["python","/app/alchemy.py"]
