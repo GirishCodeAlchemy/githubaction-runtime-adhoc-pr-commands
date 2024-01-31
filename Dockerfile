@@ -18,6 +18,7 @@ WORKDIR /app
 # Copy scripts
 COPY scripts /app/
 
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +xR /app/
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+# ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/app/alchemy.py"]
