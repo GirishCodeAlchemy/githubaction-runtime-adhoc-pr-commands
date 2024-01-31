@@ -35,6 +35,14 @@ class GitHubAdhocAction:
         print(f"PR_NUMBER: {self.pr_number}")
         return self.pr_number
 
+    def fetch_user_login_from_events(self):
+        print("Fetching user info from events...")
+        with open(self.github_event_path, "r") as f:
+            data = json.load(f)
+            self.user_login = data.get("comment", {}).get("user", {}).get("login")
+            if self.user_login is None:
+                self.user_login = data.get("pull_request", {}).get("user", {}).get("login")
+
     def get_comment_body(self):
         print("Getting comment body...")
         response = requests.get(
@@ -62,15 +70,17 @@ class GitHubAdhocAction:
         if rebaseable != "true":
             raise Exception("GitHub doesn't think that the PR is rebaseable!")
 
-    def get_user_info(self, user_login):
+    def get_user_info(self):
         print("Getting user info...")
         response = requests.get(
-            f"{self.uri}/users/{user_login}",
+            f"{self.uri}/users/{self.user_login}",
             headers=self.header
         )
         data = response.json()
-        user = data.get("name", user_login)
-        user_email = data.get("email", f"{user_login}@users.noreply.github.com")
+        user = data.get("name", self.user_login)
+        user_email = data.get("email", f"{self.user_login}@users.noreply.github.com")
+        if user_email is None:
+            user_email = f"{self.user_login}@users.noreply.github.com"
         return user, user_email
 
     def git_config(self, user, user_email, head_repo):
@@ -83,28 +93,35 @@ class GitHubAdhocAction:
 
     def rebase(self, base_branch, head_branch, autosquash):
         print("Performing git rebase...")
-        subprocess.run(["git", "fetch", "origin", base_branch])
-        subprocess.run(["git", "fetch", "fork", head_branch])
-        subprocess.run(["git", "checkout", "-b", f"fork/{head_branch}", f"fork/{head_branch}"])
+        subprocess.run(["git", "fetch", "origin", base_branch], check=True, text=True, capture_output=True)
+        subprocess.run(["git", "fetch", "fork", head_branch], check=True, text=True, capture_output=True)
+        subprocess.run(["git", "checkout", "-b", f"fork/{head_branch}", f"fork/{head_branch}"], check=True, text=True, capture_output=True)
+
         if autosquash:
-            subprocess.run(["GIT_SEQUENCE_EDITOR=:", "git", "rebase", "-i", "--autosquash", f"origin/{base_branch}"])
+            rebase_output = subprocess.run(["GIT_SEQUENCE_EDITOR=:", "git", "rebase", "-i", "--autosquash", f"origin/{base_branch}"], text=True, capture_output=True)
         else:
-            subprocess.run(["git", "rebase", f"origin/{base_branch}"])
-        subprocess.run(["git", "status"])
-        subprocess.run(["git", "push", "--force-with-lease", "fork", f"fork/{head_branch}:{head_branch}"])
+            rebase_output = subprocess.run(["git", "rebase", f"origin/{base_branch}"], text=True, capture_output=True)
+
+        print("Rebase Output:")
+        print(rebase_output.stdout)
+        print(rebase_output.stderr)
+
+        subprocess.run(["git", "status"], check=True, text=True, capture_output=True)
+        subprocess.run(["git", "push", "--force-with-lease", "fork", f"fork/{head_branch}:{head_branch}"], check=True, text=True, capture_output=True)
 
     def run(self, autosquash=False):
         print("Running GitHubAdhocAction...")
         pr_info = self.get_pr_info()
         base_repo = pr_info["base"]["repo"]["full_name"]
         base_branch = pr_info["base"]["ref"]
-        user_login = pr_info["user"]["login"]
-        user, user_email = self.get_user_info(user_login)
+        # user_login = pr_info["user"]["login"]
+        self.fetch_user_login_from_events()
+        user, user_email = self.get_user_info()
         head_repo = pr_info["head"]["repo"]["full_name"]
         head_branch = pr_info["head"]["ref"]
         print(f"---> Base repo: {base_repo}")
         print(f"---> Base branch: {base_branch}")
-        print(f"---> User login: {user_login}")
+        print(f"---> User login: {self.user_login}")
         print(f"---> User: {user}")
         print(f"---> User email: {user_email}")
         print(f"---> Head repo: {head_repo}")
