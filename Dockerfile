@@ -22,8 +22,9 @@ RUN apt-get update && \
     curl \
     git-lfs \
     wget \
-    requests \
     && rm -rf /var/lib/apt/lists/*
+
+RUN pip install requests
 
 WORKDIR /app
 
