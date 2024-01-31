@@ -1,4 +1,5 @@
-FROM alpine:latest
+# FROM alpine:latest
+FROM python:3.10-slim
 
 LABEL version="1.0.0"
 LABEL repository="https://github.com/GirishCodeAlchemy/githubaction-runtime-adhoc-pr-commands.git"
@@ -11,7 +12,17 @@ LABEL "com.github.actions.color"="gray-dark"
 
 
 # Install packages
-RUN apk --no-cache add jq bash curl git git-lfs
+# RUN apk --no-cache add jq bash curl git git-lfs
+
+# Install git
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    git \
+    jq \
+    curl \
+    git-lfs \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -21,4 +32,4 @@ COPY scripts /app/
 RUN chmod +x /app/entrypoint.sh
 
 # ENTRYPOINT ["/app/entrypoint.sh"]
-ENTRYPOINT ["python","/app/alchemy.py"]
+ENTRYPOINT ["python3","/app/alchemy.py"]
