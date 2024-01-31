@@ -77,8 +77,8 @@ class GitHubAdhocAction:
         print("Configuring git...")
         subprocess.run(["git", "config", "--global", "--add", "safe.directory", "/github/workspace"])
         subprocess.run(["git", "remote", "set-url", "origin", f"https://x-access-token:{self.github_token}@github.com/{self.github_repository}.git"])
-        subprocess.run(["git", "config", "--global", "user.email", user_email])
-        subprocess.run(["git", "config", "--global", "user.name", user])
+        subprocess.run(["git", "config", "--global", "user.email", str(user_email)])
+        subprocess.run(["git", "config", "--global", "user.name", str(user)])
         subprocess.run(["git", "remote", "add", "fork", f"https://x-access-token:{self.github_token}@github.com/{head_repo}.git"])
 
     def rebase(self, base_branch, head_branch, autosquash):
