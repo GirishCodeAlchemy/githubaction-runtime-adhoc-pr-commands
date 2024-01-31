@@ -22,6 +22,7 @@ RUN apt-get update && \
     curl \
     git-lfs \
     wget \
+    requests \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
