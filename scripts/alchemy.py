@@ -108,9 +108,11 @@ class GitHubAdhocAction:
     def autosquash(self, base_branch, head_branch):
         print("Autosquashing commits...")
         subprocess.run(["git", "fetch", "fork", head_branch], check=True, text=True, capture_output=True)
-        subprocess.run(["git", "checkout", "-b", f"fork/{head_branch}", f"fork/{head_branch}"], check=True, text=True, capture_output=True)
+        subprocess.run(["git", "checkout", "-b", f"{head_branch}", f"fork/{head_branch}"], check=True, text=True, capture_output=True)
         try:
-            squash_output = subprocess.run(["GIT_SEQUENCE_EDITOR=:", "git", "rebase", "-i", "--autosquash"], check=True,  text=True, capture_output=True)
+            env = os.environ.copy()
+            env["GIT_SEQUENCE_EDITOR"] = ":"
+            squash_output = subprocess.run(["git", "rebase", "-i", "--autosquash"], check=True, env=env, text=True, capture_output=True)
         except subprocess.CalledProcessError as e:
             error_message = f"Error during rebase. Return code: {e.returncode}"
             error_message += f"\n\nstdout:\n{e.stdout}"
