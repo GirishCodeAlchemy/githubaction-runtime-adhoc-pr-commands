@@ -62,7 +62,8 @@ class GitHubAdhocAction:
             f"{self.uri}/repos/{self.github_repository}/issues/{self.pr_number}/comments",
             headers={"Authorization": f"Bearer {self.github_token}"}
         )
-        return response.json()[-1]["body"]
+        self.comment_body = response.json()[-1]["body"]
+        return self.comment_body
 
     def get_pr_info(self):
         print("Getting PR info...")
@@ -104,14 +105,36 @@ class GitHubAdhocAction:
         subprocess.run(["git", "config", "--global", "user.name", str(user)])
         subprocess.run(["git", "remote", "add", "fork", f"https://x-access-token:{self.github_token}@github.com/{head_repo}.git"])
 
+    def autosquash(self, base_branch, head_branch):
+        print("Autosquashing commits...")
+        subprocess.run(["git", "fetch", "fork", head_branch], check=True, text=True, capture_output=True)
+        subprocess.run(["git", "checkout", "-b", f"fork/{head_branch}", f"fork/{head_branch}"], check=True, text=True, capture_output=True)
+        squash_output = subprocess.run(["git", "rebase", "-i", "--autosquash"], check=True,  text=True, capture_output=True)
+        if squash_output.returncode != 0:
+            error_message = f"Error during rebase. Return code: {squash_output.returncode}"
+            error_message += f"\n\nstdout:\n{squash_output.stdout}"
+            error_message += f"\nstderr:\n{squash_output.stderr}"
+            error_lines = error_message.splitlines()
+            formatted_error = "\n".join([f"{Fore.RED}{Style.BRIGHT}{line}{Style.RESET_ALL}" for line in error_lines])
+            print(formatted_error)
+            exit(1)
+
+        else:
+            print(f"{Fore.GREEN}{Style.BRIGHT}Rebase Output:{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}{squash_output.stdout}{Style.RESET_ALL}")
+            print(f"{Fore.RED}{squash_output.stderr}{Style.RESET_ALL}")
+
+        subprocess.run(["git", "status"], check=True, text=True, capture_output=True)
+        subprocess.run(["git", "push", "--force-with-lease", "fork", f"fork/{head_branch}:{head_branch}"], check=True, text=True, capture_output=True)
+
     def rebase(self, base_branch, head_branch, autosquash):
-        print("Performing git rebase...")
+        print(f"Performing git {self.comment_body}...")
         subprocess.run(["git", "fetch", "origin", base_branch], check=True, text=True, capture_output=True)
         subprocess.run(["git", "fetch", "fork", head_branch], check=True, text=True, capture_output=True)
         subprocess.run(["git", "checkout", "-b", f"fork/{head_branch}", f"fork/{head_branch}"], check=True, text=True, capture_output=True)
 
         if autosquash:
-            rebase_output = subprocess.run(["GIT_SEQUENCE_EDITOR=:", "git", "rebase", "-i", "--autosquash", f"origin/{base_branch}"], text=True, capture_output=True)
+            rebase_output = subprocess.run(["git", "rebase", "-i", "--autosquash", f"origin/{base_branch}"], text=True, capture_output=True)
         else:
             rebase_output = subprocess.run(["git", "rebase", f"origin/{base_branch}"], text=True, capture_output=True)
 
@@ -149,11 +172,21 @@ class GitHubAdhocAction:
         print(f"---> Head repo: {head_repo}")
         print(f"---> Head branch: {head_branch}")
         self.git_config(user, user_email, head_repo)
-        self.rebase(base_branch, head_branch, autosquash)
+        if self.comment_body == "/autosquash":
+            self.autosquash(base_branch, head_branch)
+        else:
+            self.rebase(base_branch, head_branch, autosquash)
 
 
 if __name__ == '__main__':
     adhoc_action = GitHubAdhocAction()
     comment_body = adhoc_action.get_comment_body()
     print(f"---> Comment body {comment_body}")
-    adhoc_action.run()
+    autosquash = False
+    if "autosquash" in comment_body:
+        autosquash = True
+    if comment_body in ["/autosquash", "/rebase", "/rebase-autosquash"]:
+        adhoc_action.run(autosquash)
+    else:
+        print(f"{Fore.RED}{Style.BRIGHT}Invalid comment body. Exiting....{Style.RESET_ALL}")
+        exit(1)
