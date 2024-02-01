@@ -115,24 +115,19 @@ class GitHubAdhocAction:
             rebase_output = subprocess.run(["git", "rebase", f"origin/{base_branch}"], text=True, capture_output=True)
 
         if rebase_output.returncode != 0:
-            # error_message = f"Error during rebase. Return code: {rebase_output.returncode}\n\nstdout:\n{rebase_output.stdout}\nstderr:\n{rebase_output.stderr}"
-            # print(f"{Fore.RED}{Style.BRIGHT}{error_message}{Style.RESET_ALL}")
-            # exit(1)
-
             error_message = f"Error during rebase. Return code: {rebase_output.returncode}"
             error_message += f"\n\nstdout:\n{rebase_output.stdout}"
             error_message += f"\nstderr:\n{rebase_output.stderr}"
-
-            # Apply red color to each line of the error message
             error_lines = error_message.splitlines()
             formatted_error = "\n".join([f"{Fore.RED}{Style.BRIGHT}{line}{Style.RESET_ALL}" for line in error_lines])
             print(formatted_error)
             exit(1)
 
         else:
-            print("Rebase Output:")
-            print(rebase_output.stdout)
-            print(rebase_output.stderr)
+            print(f"{Fore.GREEN}{Style.BRIGHT}Rebase Output:{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}{rebase_output.stdout}{Style.RESET_ALL}")
+            print(f"{Fore.RED}{rebase_output.stderr}{Style.RESET_ALL}")
+
         subprocess.run(["git", "status"], check=True, text=True, capture_output=True)
         subprocess.run(["git", "push", "--force-with-lease", "fork", f"fork/{head_branch}:{head_branch}"], check=True, text=True, capture_output=True)
 
