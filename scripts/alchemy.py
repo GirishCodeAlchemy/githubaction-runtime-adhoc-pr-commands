@@ -4,7 +4,7 @@ import subprocess
 import time
 
 import requests
-from colorama import Fore
+from colorama import Fore, Style
 from pyfiglet import figlet_format
 
 
@@ -115,7 +115,8 @@ class GitHubAdhocAction:
             rebase_output = subprocess.run(["git", "rebase", f"origin/{base_branch}"], text=True, capture_output=True)
 
         if rebase_output.returncode != 0:
-            print(f"Error during rebase. Return code: {rebase_output.returncode}\n\nstdout:\n{rebase_output.stdout}\nstderr:\n{rebase_output.stderr}")
+            error_message = f"Error during rebase. Return code: {rebase_output.returncode}\n\nstdout:\n{rebase_output.stdout}\nstderr:\n{rebase_output.stderr}"
+            print(f"{Fore.RED}{Style.BRIGHT}{error_message}{Style.RESET_ALL}")
             exit(1)
         else:
             print("Rebase Output:")
