@@ -111,7 +111,7 @@ class GitHubAdhocAction:
         subprocess.run(["git", "checkout", "-b", f"{head_branch}", f"fork/{head_branch}"], check=True, text=True, capture_output=True)
         try:
             env = os.environ.copy()
-            env["GIT_SEQUENCE_EDITOR"] = ":"
+            env["GIT_SEQUENCE_EDITOR"] = "true"
             subprocess.run(["git", "commit", "--amend", "-m", "squash!"], check=True, text=True, capture_output=True)
             squash_output = subprocess.run(["git", "rebase", "-i", "--autosquash", f"origin/{base_branch}"], check=True, env=env, text=True, capture_output=True)
         except subprocess.CalledProcessError as e:
