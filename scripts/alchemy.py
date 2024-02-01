@@ -112,7 +112,6 @@ class GitHubAdhocAction:
         try:
             env = os.environ.copy()
             env["GIT_SEQUENCE_EDITOR"] = "true"
-            subprocess.run(["git", "commit", "--amend", "-m", "squash!"], check=True, text=True, capture_output=True)
             squash_output = subprocess.run(["git", "rebase", "-i", "--autosquash", f"origin/{base_branch}"], check=True, env=env, text=True, capture_output=True)
         except subprocess.CalledProcessError as e:
             error_message = f"Error during Autosquash. Return code: {e.returncode}"
@@ -135,8 +134,12 @@ class GitHubAdhocAction:
         subprocess.run(["git", "fetch", "fork", head_branch], check=True, text=True, capture_output=True)
         subprocess.run(["git", "checkout", "-b", f"fork/{head_branch}", f"fork/{head_branch}"], check=True, text=True, capture_output=True)
 
+        rebase_output = ""
         if autosquash:
-            rebase_output = subprocess.run(["git", "rebase", "-i", "--autosquash", f"origin/{base_branch}"], text=True, capture_output=True)
+            env = os.environ.copy()
+            env["GIT_SEQUENCE_EDITOR"] = "true"
+            rebase_output = subprocess.run(["git", "rebase", "-i", "--autosquash", f"origin/{base_branch}"], check=True, env=env, text=True, capture_output=True)
+            print(f"{rebase_output.stdout}")
         rebase_output = subprocess.run(["git", "rebase", f"origin/{base_branch}"], text=True, capture_output=True)
 
         if rebase_output.returncode != 0:
