@@ -118,7 +118,9 @@ class GitHubAdhocAction:
         print(rebase_output.stdout)
         print(rebase_output.stderr)
         if rebase_output.returncode != 0:
-            raise Exception(f"Error during rebase. Return code: {rebase_output.returncode}\n\nstdout:\n{rebase_output.stdout}\nstderr:\n{rebase_output.stderr}")
+            print(f"Error during rebase. Return code: {rebase_output.returncode}\n\nstdout:\n{rebase_output.stdout}\nstderr:\n{rebase_output.stderr}")
+            exit(1)
+            # raise Exception(f"Error during rebase. Return code: {rebase_output.returncode}\n\nstdout:\n{rebase_output.stdout}\nstderr:\n{rebase_output.stderr}")
 
         subprocess.run(["git", "status"], check=True, text=True, capture_output=True)
         subprocess.run(["git", "push", "--force-with-lease", "fork", f"fork/{head_branch}:{head_branch}"], check=True, text=True, capture_output=True)
