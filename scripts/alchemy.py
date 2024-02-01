@@ -105,6 +105,8 @@ class GitHubAdhocAction:
         print("Rebase Output:")
         print(rebase_output.stdout)
         print(rebase_output.stderr)
+        if rebase_output.returncode != 0:
+            raise Exception(f"Error during rebase. Return code: {rebase_output.returncode}\n\nstdout:\n{rebase_output.stdout}\nstderr:\n{rebase_output.stderr}")
 
         subprocess.run(["git", "status"], check=True, text=True, capture_output=True)
         subprocess.run(["git", "push", "--force-with-lease", "fork", f"fork/{head_branch}:{head_branch}"], check=True, text=True, capture_output=True)
@@ -114,7 +116,6 @@ class GitHubAdhocAction:
         pr_info = self.get_pr_info()
         base_repo = pr_info["base"]["repo"]["full_name"]
         base_branch = pr_info["base"]["ref"]
-        # user_login = pr_info["user"]["login"]
         self.fetch_user_login_from_events()
         user, user_email = self.get_user_info()
         head_repo = pr_info["head"]["repo"]["full_name"]
