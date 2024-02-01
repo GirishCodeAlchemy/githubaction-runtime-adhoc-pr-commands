@@ -24,12 +24,14 @@ RUN apt-get update && \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install requests
+
 
 WORKDIR /app
 
 # Copy scripts
 COPY scripts /app/
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
 
 RUN chmod +x /app/entrypoint.sh
 

@@ -4,6 +4,8 @@ import subprocess
 import time
 
 import requests
+from colorama import Fore
+from pyfiglet import figlet_format
 
 
 class GitHubAdhocAction:
@@ -20,7 +22,15 @@ class GitHubAdhocAction:
             'Accept': 'application/vnd.github.v3+json'}
         self.max_retries = 6
         self.retry_interval = 10
+        self.display_logo()
         self.get_pr_number()
+
+    def display_logo(self):
+        name = "GirishCodeAlchemy"
+        formatted_text = figlet_format(name, font="standard", width=100)
+        print(Fore.GREEN + formatted_text)
+        print("="*150)
+        print(Fore.RESET)
 
     def get_pr_number(self):
         print("Getting PR number...")
