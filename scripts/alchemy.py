@@ -30,7 +30,8 @@ class GitHubAdhocAction:
         print(Fore.GREEN)
         name = "  GirishCodeAlchemy"
         formatted_text = figlet_format(name, font="standard", width=100)
-        print(Fore.GREEN + formatted_text)
+        for line in formatted_text.splitlines():
+            print(Fore.GREEN + Style.BRIGHT + line)
         print(Fore.RESET)
         print("="*100)
 
