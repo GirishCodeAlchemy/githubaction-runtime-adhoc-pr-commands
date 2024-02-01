@@ -6,6 +6,22 @@ Automate custom commands on pull requests using GitHub Actions.
 
 This GitHub Action allows you to execute ad-hoc commands on pull requests dynamically in response to comments. It provides a flexible way to trigger specific tasks based on user interactions.
 
+```mermaid
+gitGraph
+    commit "1"
+    commit "2"
+    branch develop
+    commit "3"
+    commit "4"
+    commit "5"
+    checkout main
+    commit "6"
+    commit "7"
+    checkout develop
+    commit "(rebase and squash here)"
+    merge main
+```
+
 ## Usage
 
 ### Workflow Setup
@@ -42,18 +58,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-```mermaid
-gitGraph
-    commit "1"
-    commit "2"
-    branch develop
-    commit "3"
-    commit "4"
-    commit "5"
-    checkout main
-    commit "6"
-    commit "7"
-    checkout develop
-    commit "(rebase and squash here)"
-    merge main
-```
+
