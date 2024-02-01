@@ -41,3 +41,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+```mermaid
+gitGraph
+    commit "1"
+    commit "2"
+    branch develop
+    commit "3"
+    commit "4"
+    commit "5"
+    checkout main
+    commit "6"
+    commit "7"
+    checkout develop
+    commit "(rebase and squash here)"
+    merge main
+```
