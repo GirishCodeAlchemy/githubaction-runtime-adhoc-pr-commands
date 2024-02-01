@@ -41,7 +41,8 @@ jobs:
       github.event.issue.pull_request != '' &&
       (
         contains(github.event.comment.body, '/rebase') ||
-        contains(github.event.comment.body, '/autosquash')
+        contains(github.event.comment.body, '/autosquash') ||
+        contains(github.event.comment.body, '/rebase-autosquash')
       )
     steps:
       - name: Checkout the latest code
