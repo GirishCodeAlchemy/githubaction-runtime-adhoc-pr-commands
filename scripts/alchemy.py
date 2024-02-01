@@ -26,11 +26,13 @@ class GitHubAdhocAction:
         self.get_pr_number()
 
     def display_logo(self):
-        name = "GirishCodeAlchemy"
+        print("="*100)
+        print(Fore.GREEN)
+        name = "  GirishCodeAlchemy"
         formatted_text = figlet_format(name, font="standard", width=100)
         print(Fore.GREEN + formatted_text)
-        print("="*150)
         print(Fore.RESET)
+        print("="*100)
 
     def get_pr_number(self):
         print("Getting PR number...")
