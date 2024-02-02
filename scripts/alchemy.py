@@ -123,7 +123,7 @@ class GitHubAdhocAction:
             exit(1)
         print(f"{Fore.GREEN}{Style.BRIGHT}Autosquash Output:{Style.RESET_ALL}")
         print(f"{Fore.GREEN}{squash_output.stdout}{Style.RESET_ALL}")
-        print(f"{Fore.RED}{squash_output.stderr}{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}{squash_output.stderr}{Style.RESET_ALL}")
 
         subprocess.run(["git", "status"], check=True, text=True, capture_output=True)
         subprocess.run(["git", "push", "--force-with-lease", "fork", f"fork/{head_branch}:{head_branch}"], check=True, text=True, capture_output=True)
@@ -154,7 +154,7 @@ class GitHubAdhocAction:
         else:
             print(f"{Fore.GREEN}{Style.BRIGHT}Rebase Output:{Style.RESET_ALL}")
             print(f"{Fore.GREEN}{rebase_output.stdout}{Style.RESET_ALL}")
-            print(f"{Fore.RED}{rebase_output.stderr}{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}{rebase_output.stderr}{Style.RESET_ALL}")
 
         subprocess.run(["git", "status"], check=True, text=True, capture_output=True)
         subprocess.run(["git", "push", "--force-with-lease", "fork", f"fork/{head_branch}:{head_branch}"], check=True, text=True, capture_output=True)
