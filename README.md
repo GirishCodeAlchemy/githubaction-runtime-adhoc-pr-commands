@@ -22,7 +22,7 @@ gitGraph
     merge main
 ```
 
----
+## Sequence Diagram: Adhoc Commands Workflow
 
 ```mermaid
 sequenceDiagram
@@ -63,7 +63,26 @@ sequenceDiagram
 
 ```
 
-## Usage
+### 1. Main Branch to New Branch: Checkout and Changes
+
+- The main branch initiates the creation of a new branch.
+- The user makes changes in the new branch, commits them, and pushes the changes to the remote repository.
+
+### 2. New Branch to Main Branch: Create Pull Request
+
+- A pull request is created from the new branch to the main branch.
+
+### 3. User to Pull Request: Trigger Commands
+
+- The user adds a comment to the pull request with one of the following commands: `/rebase`, `/autosquash`, or `/rebase-autosquash`.
+
+### 4. Based on Comment: Rebase, Autosquash, or Both
+
+- If the comment contains `/rebase`, the main branch rebases onto the new branch.
+- If the comment contains `/autosquash`, autosquashing is performed in the new branch.
+- If the comment contains `/rebase-autosquash`, both rebase and autosquash actions are executed.
+
+# Usage
 
 ### Workflow Setup
 
@@ -100,7 +119,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-## Sequence Diagram: Adhoc Commands Workflow
+## Github Action Adhoc Commands Workflow
 
 ```mermaid
   sequenceDiagram
@@ -125,21 +144,35 @@ jobs:
 
 ```
 
-### 1. Main Branch to New Branch: Checkout and Changes
+## Sequence Diagram: GitHub Actions Workflow
 
-- The main branch initiates the creation of a new branch.
-- The user makes changes in the new branch, commits them, and pushes the changes to the remote repository.
+### 1. User to GitHub Event: Trigger PR Comment
 
-### 2. New Branch to Main Branch: Create Pull Request
+- The user creates a pull request comment with one of the commands: `/rebase`, `/autosquash`, or `/rebase-autosquash`.
 
-- A pull request is created from the new branch to the main branch.
+### 2. GitHub Event to GitHub Actions: Event Trigger
 
-### 3. User to Pull Request: Trigger Commands
+- The GitHub event is triggered, specifically the 'created' event on `issue_comment`.
 
-- The user adds a comment to the pull request with one of the following commands: `/rebase`, `/autosquash`, or `/rebase-autosquash`.
+### 3. GitHub Actions to Checkout Action: Prepare Workflow
 
-### 4. Based on Comment: Rebase, Autosquash, or Both
+- GitHub Actions checks if the pull request comment contains specific commands.
+- If commands are found, it proceeds to the next step; otherwise, the workflow is ignored.
 
-- If the comment contains `/rebase`, the main branch rebases onto the new branch.
-- If the comment contains `/autosquash`, autosquashing is performed in the new branch.
-- If the comment contains `/rebase-autosquash`, both rebase and autosquash actions are executed.
+### 4. Checkout Action to Adhoc Commands Action: Execute Commands
+
+- GitHub Actions checks out the latest code.
+- Adhoc Commands Action is triggered to run ad-hoc commands based on the user's comment.
+
+### 5. Adhoc Commands Action to GitHub Actions: Successful Execution
+
+- Adhoc commands are executed successfully, performing actions such as rebase, autosquash, or both.
+- GitHub Actions acknowledges the successful execution.
+
+### 6. GitHub Actions to GitHub Event: Complete Workflow
+
+- The workflow is completed, and GitHub Actions updates the GitHub event accordingly.
+
+### 7. GitHub Actions to GitHub Event: Ignore Workflow
+
+- If no specific commands are found in the PR comment, GitHub Actions ignores the workflow.
