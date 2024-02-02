@@ -33,4 +33,7 @@ COPY scripts /app/
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
+RUN chmod +x /app/entrypoint.sh
+
+# ENTRYPOINT ["/app/entrypoint.sh"]
 ENTRYPOINT ["python3","/app/alchemy.py"]
