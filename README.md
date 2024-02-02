@@ -1,5 +1,9 @@
 # GithubAction Runtime Adhoc PR Commands
 
+<p align="center">
+  <img src="./assets/cover.gif" width="300" alt="githubaction workflow status generator">
+</p>
+
 Automate custom commands on pull requests using GitHub Actions.
 
 ## Overview
@@ -112,12 +116,14 @@ jobs:
           fetch-depth: 0
 
       - name: Running Adhoc commands
-        uses: GirishCodeAlchemy/githubaction-runtime-adhoc-pr-commands@main
+        uses: GirishCodeAlchemy/githubaction-runtime-adhoc-pr-commands@v1
         with:
           autosquash: ${{ contains(github.event.comment.body, '/autosquash') || contains(github.event.comment.body, '/rebase-autosquash') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+![Alt text](assets/usage-flow.gif)
 
 ## Github Action Adhoc Commands Workflow
 
