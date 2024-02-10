@@ -26,12 +26,6 @@ gitGraph
     merge main
 ```
 
-{% mermaid %}
-graph LR
-A[Start] --> B(Intermediate)
-B --> C{End}
-{% endmermaid %}
-
 ## Sequence Diagram: Adhoc Commands Workflow
 
 ```mermaid
