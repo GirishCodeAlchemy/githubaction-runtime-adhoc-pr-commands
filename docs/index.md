@@ -13,6 +13,10 @@ card_image: /assets/images/cover-1.gif
 
 Automate custom commands on pull requests using GitHub Actions.
 
+<p align="center">
+  <img src="/assets/images/cover-1.gif" width="400" alt="githubaction workflow status generator">
+</p>
+
 ## Overview
 
 This GitHub Action allows you to execute ad-hoc commands on pull requests dynamically in response to comments. It provides a flexible way to trigger specific tasks based on user interactions.
