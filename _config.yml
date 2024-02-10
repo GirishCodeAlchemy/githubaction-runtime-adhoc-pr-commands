@@ -1,6 +1,5 @@
 plugins:
   - jekyll-mermaid
-  - jekyll-spaceship
 
 mermaid:
-  src: true
+  src: '/assets/scripts/mermaid-8.9.2/mermaid.min.js'
