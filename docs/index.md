@@ -1,7 +1,7 @@
 # GithubAction Runtime Adhoc PR Commands
 
 <p align="center">
-  <img src="./assets/cover-1.gif" width="400" alt="githubaction workflow status generator">
+  <img src="../assets/cover-1.gif" width="400" alt="githubaction workflow status generator">
 </p>
 
 Automate custom commands on pull requests using GitHub Actions.
@@ -10,7 +10,7 @@ Automate custom commands on pull requests using GitHub Actions.
 
 This GitHub Action allows you to execute ad-hoc commands on pull requests dynamically in response to comments. It provides a flexible way to trigger specific tasks based on user interactions.
 
-```mermaid
+<div class="mermaid">
 gitGraph
     commit "1"
     commit "2"
@@ -24,11 +24,11 @@ gitGraph
     checkout develop
     commit "(rebase and squash here)"
     merge main
-```
+</div>
 
 ## Sequence Diagram: Adhoc Commands Workflow
 
-```mermaid
+<div class="mermaid">
 sequenceDiagram
     participant MainBranch as Main Branch
     participant NewBranch as New Branch
@@ -65,7 +65,7 @@ sequenceDiagram
       MainBranch ->> NewBranch: Rebased
     end
 
-```
+</div>
 
 ### 1. Main Branch to New Branch: Checkout and Changes
 
@@ -127,7 +127,7 @@ jobs:
 
 ## Github Action Adhoc Commands Workflow
 
-```mermaid
+<div class="mermaid">
   sequenceDiagram
       participant User
       participant GitHubEvent
@@ -148,7 +148,7 @@ jobs:
           GitHubActions-->>GitHubEvent: Ignore event, no specific commands found
       end
 
-```
+</div>
 
 ## Sequence Diagram: GitHub Actions Workflow
 
@@ -182,3 +182,5 @@ jobs:
 ### 7. GitHub Actions to GitHub Event: Ignore Workflow
 
 - If no specific commands are found in the PR comment, GitHub Actions ignores the workflow.
+
+<script src="{{ "/assets/scripts/mermaid-8.9.2/mermaid.min.js" | relative_url }}"></script>
