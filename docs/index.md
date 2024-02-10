@@ -1,8 +1,15 @@
-# GithubAction Runtime Adhoc PR Commands
-
-<p align="center">
-  <img src="/assets/cover-1.gif" width="400" alt="githubaction workflow status generator">
-</p>
+---
+title: "GithubAction Runtime Adhoc PR Commands"
+published: true
+categories:
+  - Development
+tags:
+  - GithubActions
+  - AdhocCommand
+  - Rebase
+  - Squash
+card_image: /assets/images/cover-1.gif
+---
 
 Automate custom commands on pull requests using GitHub Actions.
 
@@ -123,7 +130,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-![Alt text](/assets/usage-flow.gif)
+![Alt text](/assets/images/usage-flow.gif)
 
 ## Github Action Adhoc Commands Workflow
 
