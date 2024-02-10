@@ -190,4 +190,4 @@ jobs:
 
 - If no specific commands are found in the PR comment, GitHub Actions ignores the workflow.
 
-<script src="{{ "/assets/mermaid-8.9.2/mermaid.min.js" | relative_url }}"></script>
+<script src="{{ "/assets/mermaid-10.8.0/mermaid.min.js" | relative_url }}"></script>

@@ -5,10 +5,9 @@ plugins:
   - jekyll-mermaid
 
 mermaid:
-  src: '/assets/scripts/mermaid-8.9.2/mermaid.min.js'
+  src: '/docs/assets/mermaid-10.8.0/mermaid.min.js'
 
 
 social_media:
-  github: girishcodealchemy
   website: https://girishcodealcehmy.github.io
   linkedin: vgirish10
