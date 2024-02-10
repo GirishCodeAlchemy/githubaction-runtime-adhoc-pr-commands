@@ -4,15 +4,8 @@ theme_color: snowwhite
 # Custom color as below:
 # theme_color: "#882250"
 
-
-# Build settings
-markdown: kramdown
-remote_theme: jeffreytse/jekyll-theme-yat
-
 plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-sitemap
-  - jekyll-paginate
-  - jekyll-spaceship
-  - jekyll-remote-theme
+  - jekyll-mermaid
+
+mermaid:
+  src: true
