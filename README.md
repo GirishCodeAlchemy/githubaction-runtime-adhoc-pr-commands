@@ -190,3 +190,5 @@ jobs:
 ### 7. GitHub Actions to GitHub Event: Ignore Workflow
 
 - If no specific commands are found in the PR comment, GitHub Actions ignores the workflow.
+
+<script src="{{ "/assets/scripts/mermaid-8.9.2/mermaid.min.js" | relative_url }}"></script>
