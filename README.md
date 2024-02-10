@@ -3,6 +3,7 @@
 <p align="center">
   <img src="./assets/cover-1.gif" width="400" alt="githubaction workflow status generator">
 </p>
+<script src="./assets/scripts/mermaid-8.9.2/mermaid.min.js"></script>
 
 Automate custom commands on pull requests using GitHub Actions.
 
