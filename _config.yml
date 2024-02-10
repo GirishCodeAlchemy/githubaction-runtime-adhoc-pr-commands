@@ -1,5 +1,7 @@
-layout: sidebar
-style: light
+layout: stacked
+style: dark
+
+repository: girishcodealchemy/githubaction-runtime-adhoc-pr-commands
 
 plugins:
   - jekyll-octicons
