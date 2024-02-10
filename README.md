@@ -26,21 +26,13 @@ gitGraph
     merge main
 ```
 
-@startmermaid
-pie title Pets adopted by volunteers
-  "Dogs" : 386
-  "Cats" : 85
-  "Rats" : 35
-@endmermaid
-
-
-| API                      | Remark                                          |
-| :----------------------- | :---------------------------------------------- |
-| GET /v1/bookshops        | Return detailed information about all bookshops |
-| GET /v1/bookshops/:id    | Return detailed information about a bookshop    |
-| POST /v1/bookshops       | Add a bookshop                                  |
-| PUT /v1/bookshops/:id    | Update details of a bookshop                    |
-| DELETE /v1/bookshops/:id | Delete a bookshop                               |
+{% mermaid %}
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+{% endmermaid %}
 
 
 ## Sequence Diagram: Adhoc Commands Workflow
