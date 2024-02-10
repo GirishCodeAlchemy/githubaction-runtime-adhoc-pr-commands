@@ -1,9 +1,3 @@
-
-theme_color: snowwhite
-#
-# Custom color as below:
-# theme_color: "#882250"
-
 plugins:
   - jekyll-mermaid
 
