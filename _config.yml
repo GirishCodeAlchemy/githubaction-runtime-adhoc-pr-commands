@@ -1,3 +1,6 @@
+layout: sidebar
+style: light
+
 plugins:
   - jekyll-mermaid
 
