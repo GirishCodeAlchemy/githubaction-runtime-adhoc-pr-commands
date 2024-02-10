@@ -6,3 +6,9 @@ plugins:
 
 mermaid:
   src: '/assets/scripts/mermaid-8.9.2/mermaid.min.js'
+
+
+social_media:
+  github: girishcodealchemy
+  website: https://girishcodealcehmy.github.io
+  linkedin: vgirish10
