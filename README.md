@@ -35,6 +35,16 @@ pie title Pets adopted by volunteers
 ```
 ````
 
+
+| API                      | Remark                                          |
+| :----------------------- | :---------------------------------------------- |
+| GET /v1/bookshops        | Return detailed information about all bookshops |
+| GET /v1/bookshops/:id    | Return detailed information about a bookshop    |
+| POST /v1/bookshops       | Add a bookshop                                  |
+| PUT /v1/bookshops/:id    | Update details of a bookshop                    |
+| DELETE /v1/bookshops/:id | Delete a bookshop                               |
+
+
 ## Sequence Diagram: Adhoc Commands Workflow
 
 ```mermaid
