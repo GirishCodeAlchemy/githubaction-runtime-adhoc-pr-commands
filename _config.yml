@@ -2,7 +2,11 @@ layout: sidebar
 style: light
 
 plugins:
+  - jekyll-octicons
+  - jekyll-github-metadata
+  - jemoji
   - jekyll-mermaid
+  - jekyll-paginate
 
 mermaid:
   src: '/docs/assets/mermaid-10.8.0/mermaid.min.js'
