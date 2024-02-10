@@ -8,13 +8,13 @@ tags:
   - AdhocCommand
   - Rebase
   - Squash
-card_image: /assets/images/cover-1.gif
+card_image: /githubaction-runtime-adhoc-pr-commands/assets/images/cover-1.gif
 ---
 
 Automate custom commands on pull requests using GitHub Actions.
 
 <p align="center">
-  <img src="/assets/images/cover-1.gif" width="400" alt="githubaction workflow status generator">
+  <img src="./assets/images/cover-1.gif" width="400" alt="githubaction workflow status generator">
 </p>
 
 ## Overview
